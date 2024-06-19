@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 const Reg = () => {
     const navigate = useNavigate()
-
     const validationSchema = yup.object({
         name: yup.string().required('name is required'),
         email: yup.string().required('email is required').email('valid addres'),
@@ -71,6 +70,10 @@ const Reg = () => {
                     <button type='submit'>add submit</button>
                 </Form>
             </Formik>
+
+            <div className='container'>
+
+            </div>
         </>
     )
 }

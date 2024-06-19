@@ -3,10 +3,23 @@ import axios from 'axios'
 
 import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
+import UpdateForm from './UpdateForm';
 
 const DisplayUser = () => {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const [data ,setData] = useState(null)
+    const [userId ,setUserId] = useState(null)
+
+    const handleShow = (user) => {
+        console.log(user);
+        setShow(true);
+        setData(user)
+        setUserId(user._id)
+    }
     const [user, setuser] = useState([]);
     const [userData, setUserData] = useState(null)
+
     useEffect(() => {
         displayUser()
     }, [])
@@ -24,7 +37,7 @@ const DisplayUser = () => {
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                           {console.log(userData)}
+                            {console.log(userData)}
                             <h5 class="modal-title" id="exampleModalLongTitle">Profile</h5><br />
 
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -32,11 +45,11 @@ const DisplayUser = () => {
                             </button>
                         </div>
                         <div class="modal-body">
-                        <h5 class="modal-title" id="exampleModalLongTitle">{userData?.email}</h5>
-                        <div><hr />
-                        <h5 class="modal-title" id="exampleModalLongTitle">{userData?.name}</h5><br />
+                            <h5 class="modal-title" id="exampleModalLongTitle">{userData?.email}</h5>
+                            <div><hr />
+                                <h5 class="modal-title" id="exampleModalLongTitle">{userData?.name}</h5><br />
 
-                        </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -69,16 +82,29 @@ const DisplayUser = () => {
                                 {user.Phone}
                             </td>
                             <td>
+
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick={() => viewsData(user)}>
                                     views
                                 </button>
-                                {/* <Button variant="secondary" onClick={()=>viewsData(user)}>views</Button> */}
+
+                                <Button variant="primary" onClick={() => handleShow(user)}>
+                                    {/* onClick={() => handleModalShow('update', user)} */}
+                                    update
+                                </Button>
                             </td>
                         </tr>
 
                     ))
                 }
             </table>
+            <UpdateForm
+                show={show}
+                data={data}
+                userId={userId}
+                handleClose={handleClose}
+        displayUser={displayUser}
+
+            />
 
         </>
     )
