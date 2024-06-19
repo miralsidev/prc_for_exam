@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './components/Home';
 import DisplayUser from './components/DisplayUser';
 import Todo from './components/Todo';
+import Login from './components/Login';
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
       <Route path='home' element={<Home/>}></Route>
       <Route path='user' element={<DisplayUser/>}></Route>
       <Route path='todo' element={<Todo/>}></Route>
+      <Route path='login' element={<Login/>}></Route>
     </Routes>
     <ToastContainer/>
     </>

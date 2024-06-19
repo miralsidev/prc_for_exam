@@ -10,19 +10,34 @@ const DisplayUser = () => {
     const handleClose = () => setShow(false);
     const [data ,setData] = useState(null)
     const [userId ,setUserId] = useState(null)
-
+    const [user, setuser] = useState([]);
+    const [userData, setUserData] = useState(null)
+    const [SerchTerm,setSerchTerm] = useState('');
+    const [filterUser,setFilterUser] = useState([])
+    // const [serchTerm,setSerchTerm]=useState('');
+    // const [filterUser,setFilterUser] = useState([])
     const handleShow = (user) => {
         console.log(user);
         setShow(true);
         setData(user)
         setUserId(user._id)
     }
-    const [user, setuser] = useState([]);
-    const [userData, setUserData] = useState(null)
-
     useEffect(() => {
         displayUser()
     }, [])
+    useEffect(()=>{
+        setFilterUser(
+            user?.data?.filter(user=>
+                user.name.toLowerCase().includes(SerchTerm.toLowerCase()) ||
+                user.email.toLowerCase().includes(SerchTerm.toLowerCase()) ||
+
+                user.Phone.toLowerCase().includes(SerchTerm.toLowerCase()) 
+
+            ) || []
+        )
+    },[SerchTerm,user])
+
+
     const displayUser = async (values) => {
         const res = await axios.get('http://localhost:3000/user/getUser')
         setuser(res.data)
@@ -31,6 +46,7 @@ const DisplayUser = () => {
         console.log('viwes data user = ', user);
         setUserData(user)
     }
+
     return (
         <>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -60,6 +76,7 @@ const DisplayUser = () => {
                 </div>
             </div>
             {console.log('user--', user.data)}
+            <input type="text" class="form-control" placeholder="serch data" value={SerchTerm} onChange={(e)=>setSerchTerm(e.target.value)}/>
             <table className='table '>
                 <tr>
                     <th>name</th>
@@ -67,10 +84,10 @@ const DisplayUser = () => {
                     <th>phone</th>
                     <th>action</th>
                 </tr>
-
                 {
+                    // user?.data?.map((user) => (
+                        filterUser.map((user) => (
 
-                    user?.data?.map((user) => (
                         <tr>
                             <td>
                                 {user.name}
