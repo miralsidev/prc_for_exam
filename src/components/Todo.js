@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 const Todo = () => {
   const [userData, setUserData] = useState(null);
   const [selectedfile, setselectedFile] = useState([]);
-  const [SerchTerm,setSerchTerm] = useState('')
-  const [filterTodo, setFilterTodo] = useState([])
+
+  const [SerchTerm,setSerchTerm]=useState('');
+  const [filterUser,setFilterUser]=useState([])
   const handlesubmite = async (values) => {
     console.log("values=", values);
     const formData = new FormData();
@@ -39,10 +40,10 @@ console.log('token=',token);
     setUserData(res.data);
   };
 useEffect(()=>{
-  setFilterTodo(
-    userData?.data.filter(userData=>
-      userData.title.toLowerCase().includes(SerchTerm.toLowerCase())||
-      userData.description.toLowerCase().includes(SerchTerm.toLowerCase())
+  setFilterUser(
+    userData?.data?.filter(todo=>
+        todo.title.toLowerCase().includes(SerchTerm.toLowerCase()) ||
+      todo.description.toLowerCase().includes(SerchTerm.toLowerCase())
     ) || []
   )
 },[SerchTerm,userData])
@@ -78,7 +79,7 @@ useEffect(()=>{
       </Formik>
 
       <h1>all data are </h1>
-      <input placeholder="enter data" value={SerchTerm} onChange={(e)=>setSerchTerm(e.currentTarget.value)}  type="text" class="form-control"/>
+<input type="text" value={SerchTerm} onChange={(e)=>setSerchTerm(e.currentTarget.value)} />
       <table className="table">
   <tbody>
     <tr>
@@ -86,8 +87,10 @@ useEffect(()=>{
       <th>description</th>
       <th>image</th>
     </tr>
-    {filterTodo.map((userData)=>(
-    // {userData?.data.map((userData) => (
+    {/* {filterTodo.map((userData)=>( */}
+    {/* // {userData?.data.map((userData) => ( */}
+    {filterUser.map((userData)=>(
+
       <tr key={userData.title}>
         <td>{userData.title}</td>
         <td>{userData.description}</td>
