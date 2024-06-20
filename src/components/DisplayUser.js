@@ -12,10 +12,10 @@ const DisplayUser = () => {
     const [userId ,setUserId] = useState(null)
     const [user, setuser] = useState([]);
     const [userData, setUserData] = useState(null)
+    
     const [SerchTerm,setSerchTerm] = useState('');
     const [filterUser,setFilterUser] = useState([])
-    // const [serchTerm,setSerchTerm]=useState('');
-    // const [filterUser,setFilterUser] = useState([])
+   
     const handleShow = (user) => {
         console.log(user);
         setShow(true);

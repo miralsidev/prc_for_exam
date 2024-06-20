@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 const Todo = () => {
   const [userData, setUserData] = useState(null);
   const [selectedfile, setselectedFile] = useState([]);
+  const [SerchTerm,setSerchTerm] = useState('')
+  const [filterTodo, setFilterTodo] = useState([])
   const handlesubmite = async (values) => {
     console.log("values=", values);
     const formData = new FormData();
@@ -36,6 +38,14 @@ console.log('token=',token);
     console.log("res data= ", res.data);
     setUserData(res.data);
   };
+useEffect(()=>{
+  setFilterTodo(
+    userData?.data.filter(userData=>
+      userData.title.toLowerCase().includes(SerchTerm.toLowerCase())||
+      userData.description.toLowerCase().includes(SerchTerm.toLowerCase())
+    ) || []
+  )
+},[SerchTerm,userData])
   return (
     <>
       <Formik
@@ -68,6 +78,7 @@ console.log('token=',token);
       </Formik>
 
       <h1>all data are </h1>
+      <input placeholder="enter data" value={SerchTerm} onChange={(e)=>setSerchTerm(e.currentTarget.value)}  type="text" class="form-control"/>
       <table className="table">
   <tbody>
     <tr>
@@ -75,13 +86,15 @@ console.log('token=',token);
       <th>description</th>
       <th>image</th>
     </tr>
-    {userData?.data.map((userData) => (
+    {filterTodo.map((userData)=>(
+    // {userData?.data.map((userData) => (
       <tr key={userData.title}>
         <td>{userData.title}</td>
         <td>{userData.description}</td>
         {console.log(userData.files, "files")}
         <td>
           {userData.files.map((abc) => (
+       
             <img
               key={abc.path}
               alt="loading"
